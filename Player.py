@@ -2,7 +2,7 @@ class Player(object):
     """An individual player in the nfl with a variety of stats available. Players have the following properties:
 
     Attributes:
-            player_id: a uniqute integer representing the player.
+            player_id: a unique integer representing the player.
             name: A string representing the players name in the form lastName_firstInitiaal.
             number: An integer with the players current number.
             team: A three character string representing the players current team.

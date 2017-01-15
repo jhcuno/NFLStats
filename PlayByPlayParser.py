@@ -19,7 +19,8 @@ kickOff = re.compile("kicks")
 fieldGoalMade = re.compile("field goal is GOOD")
 fieldGoalMissed = re.compile("field goal is No Good")
 incomplete = re.compile("incomplete")
-
+player_number = re.compile("^(\d+)")
+player_name = re.compile("[A-z]+\.[A-z]+")
 
 test_file = open("TestTemp.txt", 'r')
 
@@ -48,6 +49,7 @@ def play_by_play_parser(string_to_enter):
 
 def name_search(string_to_enter):
     matches = names.findall(string_to_enter)
+    number_dash_name_parse(matches[0])
     print("name match: %s" % matches)
 
 
@@ -70,6 +72,15 @@ def running_play_parse(string_to_enter):
     else:
         matches = yards.findall(string_to_enter)
         print("rushing yds %s" % matches)
+
+
+def number_dash_name_parse(string_to_parse):
+    number = player_number.findall(string_to_parse)
+    name = player_name.findall(string_to_parse)
+    print(">>>")
+    print(number[0])
+    print(name[0])
+
 
 line = test_file.readline()
 while line:
