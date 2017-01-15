@@ -6,13 +6,13 @@ interceptionPlay = "(7:09) (No Huddle, Shotgun) 7-B.Roethlisberger pass deep lef
 
 names = re.compile("\d+-[A-z]+\.[A-z]+")        # compiled regex for the first name that appears in the string
 passing = re.compile("pass")                    # compiled regex for passing plays NEED TO ADD SOMETHING FOR INCOMPLETE PASSES
-run = re.compile("guard | tackle | middle ")     # compiled regex for running plays
+run = re.compile("guard | tackle | middle | scrambles")     # compiled regex for running plays
 yards = re.compile("for\s(\d+)")                # compiled regex for yardage
 interception = re.compile("INTERCEPTED")
 fumble = re.compile("FUMBLE")
-fumbleLost = re.compile("RECOVERED")            # check to see if fuble is necessary not sure recovered would be used elsewhare
+fumbleLost = re.compile("RECOVERED")            # check to see if fumble is necessary not sure recovered would be used elsewhare
 fumbleNotLost = re.compile("recovered")
-penalty = re.compile("PENALTY")                 # enforeced penalties
+penalty = re.compile("PENALTY")                 # enforced penalties
 sack = re.compile("sacked")
 punt = re.compile("punts")
 kickOff = re.compile("kicks")
@@ -27,24 +27,21 @@ string_to_enterTemp = runningPlay
 
 
 def play_by_play_parser(string_to_enter):
-    """Parses a single line of text.
+    """Parses a single line play-by-play text.
     :param string_to_enter: A string for the parser to parse.
     :return:
     """
-    # finding all the names in the string
+
     if names.search(string_to_enter):
         name_search(string_to_enter)
 
-    # determine if it is a passing play, if so return the passing yards
     if passing.search(string_to_enter):
         passing_play_parse(string_to_enter)
 
-    # determine if it is a running play, if so return the rushing yards
     if run.search(string_to_enter) and not passing.search(string_to_enter):
         # need to work on fumbles but need to work out fumbles recovered vs lost
         running_play_parse(string_to_enter)
 
-    # checking for a sack
     if sack.search(string_to_enter):
         print("sack")
 
