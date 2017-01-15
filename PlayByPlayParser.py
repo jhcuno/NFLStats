@@ -21,39 +21,28 @@ fieldGoalMissed = re.compile("field goal is No Good")
 incomplete = re.compile("incomplete")
 
 
-testFile = open("TestTemp.txt", 'r')
+test_file = open("TestTemp.txt", 'r')
 
 string_to_enterTemp = runningPlay
 
 
 def play_by_play_parser(string_to_enter):
+    """Parses a single line of text.
+    :param string_to_enter: A string for the parser to parse.
+    :return:
+    """
     # finding all the names in the string
     if names.search(string_to_enter):
         name_search(string_to_enter)
-        # matches = names.findall(string_to_enter)
-        # print("match: %s" % (matches))
+
     # determine if it is a passing play, if so return the passing yards
     if passing.search(string_to_enter):
-        # need to check if there is an intercetption using ifElse
-        if interception.search(string_to_enter):
-            print("interception")
-        elif incomplete.search(string_to_enter):
-            print ("incompletion")
-        else:
-            matches = yards.findall(string_to_enter)
-            print("passing yds %s" % (matches))
+        passing_play_parse(string_to_enter)
 
     # determine if it is a running play, if so return the rushing yards
     if run.search(string_to_enter) and not passing.search(string_to_enter):
         # need to work on fumbles but need to work out fumbles recovered vs lost
-        if fumble.search(string_to_enter):
-            if fumbleLost.search(string_to_enter):
-                print("fumble lost")
-            else:
-                print("fumble not lost")
-        else:
-            matches = yards.findall(string_to_enter)
-            print("rushing yds %s" % (matches))
+        running_play_parse(string_to_enter)
 
     # checking for a sack
     if sack.search(string_to_enter):
@@ -65,11 +54,29 @@ def name_search(string_to_enter):
     print("name match: %s" % matches)
 
 
-line = testFile.readline()
+def passing_play_parse(string_to_enter):
+    if interception.search(string_to_enter):
+        print("interception")
+    elif incomplete.search(string_to_enter):
+        print("incompletion")
+    else:
+        matches = yards.findall(string_to_enter)
+        print("passing yds %s" % matches)
+
+
+def running_play_parse(string_to_enter):
+    if fumble.search(string_to_enter):
+        if fumbleLost.search(string_to_enter):
+            print("fumble lost")
+        else:
+            print("fumble not lost")
+    else:
+        matches = yards.findall(string_to_enter)
+        print("rushing yds %s" % matches)
+
+line = test_file.readline()
 while line:
     play_by_play_parser(line)
-    line = testFile.readline()
+    line = test_file.readline()
 
-testFile.close()
-# print (testFile.readline())
-# print (testFile.readline())
+test_file.close()
