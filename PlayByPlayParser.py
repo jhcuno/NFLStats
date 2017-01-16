@@ -112,15 +112,10 @@ def running_play_parse(string_to_enter):
 def number_dash_name_parse(string_to_parse):
     number = player_number.findall(string_to_parse)
     name = player_name.findall(string_to_parse)
-    key = name[0].split(".")[1] + number[0]
-    if key not in player_objects:
-        temp = {key: Player(name, number, t_name)}
+    key_name = name[0].split(".")[1] + number[0]
+    if key_name not in player_objects:
+        temp = {key_name: Player(name, number, t_name)}
         player_objects.update(temp)
-    print(">>>")
-    print(number[0])
-    print(name[0])
-    print(t_name)
-    print(name[0].split(".")[1] + number[0])
 
 
 line = test_file.readline()
