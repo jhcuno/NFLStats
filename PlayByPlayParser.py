@@ -1,4 +1,5 @@
 import re
+from Player import Player
 
 passingPlay = "7-B.Roethlisberger pass short right to 84-A.Brown pushed ob at PIT 47 for 9 yards (54-D.Hightower)."
 runningPlay = "(15:00) 34-De.Williams right tackle to PIT 38 for 18 yards (54-D.Hightower)."
@@ -11,7 +12,7 @@ yards = re.compile("for\s(\d+)")                # compiled regex for yardage
 interception = re.compile("INTERCEPTED")
 fumble = re.compile("FUMBLE")
 fumbleLost = re.compile("RECOVERED")            # check to see if fumble is necessary not sure recovered would be used elsewhare
-fumbleNotLost = re.compile("recovered")
+fumbleNotLost = re.compile('recovered')
 penalty = re.compile("PENALTY")                 # enforced penalties
 sack = re.compile("sacked")
 punt = re.compile("punts")
@@ -21,7 +22,41 @@ fieldGoalMissed = re.compile("field goal is No Good")
 incomplete = re.compile("incomplete")
 player_number = re.compile("^(\d+)")
 player_name = re.compile("[A-z]+\.[A-z]+")
+team_name = re.compile("[A-Z][a-z]+\s[A-z]+(?=\sat)")
 
+team_abbreviations = {'Arizona Cardinals': 'ARI',
+                      'Atlanta Falcons': 'ATL',
+                      'Baltimore Ravens': 'BAL',
+                      'Buffalo Bills': 'BUF',
+                      'Carolina Panthers': 'CAR',
+                      'Chicago Bears': 'CHI',
+                      'Cincinnati Bengals': 'CIN',
+                      'Cleveland Browns': 'CLE',
+                      'Dallas Cowboys': 'DAL',
+                      'Denver Broncos': 'DEN',
+                      'Detroit Lions': 'DET',
+                      'Green Bay Packers': 'GBP',
+                      'Houston Texans': 'HOU',
+                      'Indianapolis Colts': 'IND',
+                      'Jacksonville Jaguars': 'JAX',
+                      'Kansas City Chiefs': 'KCC',
+                      'Los Angeles Rams': 'LAR',
+                      'Los Angeles Chargers': 'LAC',
+                      'Miami Dolphins': 'MIA',
+                      'Minnesota Vikings': 'MIN',
+                      'New England Patriots': 'NEP',
+                      'New Orleans Saints': 'NOS',
+                      'New York Giants': 'NYG',
+                      'New York Jets': 'NYJ',
+                      'Oakland Raiders': 'OAK',
+                      'Philadelphia Eagles': 'PHI',
+                      'Pittsburgh Eagles': 'PIT',
+                      'San Diego Chargers': 'SDC',
+                      'Seattle Seahawks': 'SEA',
+                      'St. Louis Rams': 'STL',
+                      'Tampa Bay Buccaneers': 'TBB',
+                      'Tennessee Titans': 'TEN',
+                      'Washington Redskins': 'WAS'}
 test_file = open("TestTemp.txt", 'r')
 
 string_to_enterTemp = runningPlay
@@ -57,7 +92,7 @@ def passing_play_parse(string_to_enter):
     if interception.search(string_to_enter):
         print("interception")
     elif incomplete.search(string_to_enter):
-        print("incompletion")
+        print("incomplete")
     else:
         matches = yards.findall(string_to_enter)
         print("passing yds %s" % matches)
@@ -77,14 +112,29 @@ def running_play_parse(string_to_enter):
 def number_dash_name_parse(string_to_parse):
     number = player_number.findall(string_to_parse)
     name = player_name.findall(string_to_parse)
+    key = name[0].split(".")[1] + number[0]
+    if key not in player_objects:
+        temp = {key: Player(name, number, t_name)}
+        player_objects.update(temp)
     print(">>>")
     print(number[0])
     print(name[0])
+    print(t_name)
+    print(name[0].split(".")[1] + number[0])
 
 
 line = test_file.readline()
+t_name = "null"
+player_objects = {}
+
 while line:
+    if team_name.search(line):
+        t_name = team_name.findall(line)[0]
     play_by_play_parser(line)
     line = test_file.readline()
 
+for key in player_objects.keys():
+    print(key)
+
 test_file.close()
+
