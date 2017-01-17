@@ -23,7 +23,7 @@ incomplete = re.compile("incomplete")
 player_number = re.compile("^(\d+)")
 player_name = re.compile("[A-z]+\.[A-z]+")
 team_name = re.compile("[A-Z][a-z]+\s[A-z]+(?=\sat)")
-penalty = re.compile('PENALTY')
+
 
 team_abbreviations = {'Arizona Cardinals': 'ARI',
                       'Atlanta Falcons': 'ATL',
@@ -91,26 +91,25 @@ def name_search(string_to_enter):
 
 
 def passing_play_parse(string_to_enter):
+    names_to_parse = name_search(string_to_enter)
     if interception.search(string_to_enter) and not penalty.search(string_to_enter):
         print("interception")
-        names_to_parse = name_search(string_to_enter)
         for i in range(4):
             number_dash_name_parse(names_to_parse[i])
 
     elif incomplete.search(string_to_enter) and not penalty.search(string_to_enter):
         print("incomplete")
-        names_to_parse = name_search(string_to_enter)
         for i in range(2):
             number_dash_name_parse(names_to_parse[i])
     elif not penalty.search(string_to_enter):
         matches = yards.findall(string_to_enter)
         matches.append('0')
         print("passing yds %s" % matches)
-        names_to_parse = name_search(string_to_enter)
         temp_list = []
         for i in range(2):
             temp_list.append(number_dash_name_parse(names_to_parse[i]))
         player_objects.get(temp_list[0]).add_passing_yards(int(matches[0]))
+        player_objects.get(temp_list[1]).add_reception_yards(int(matches[0]))
 
 
 def running_play_parse(string_to_enter):
@@ -157,7 +156,7 @@ for key in player_objects.keys():
     print(key)
 
 print(len(player_objects))
-print(player_objects.get('Murray28').rushing_yards)
+print(player_objects.get('Murray28').reception_yards)
 
 test_file.close()
 

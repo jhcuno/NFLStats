@@ -16,6 +16,7 @@ class Player(object):
         self.team = team
         self.passing_yards = 0
         self.rushing_yards = 0
+        self.reception_yards = 0
         self.rush_attempts = 0
         self.targets = 0
         self.receptions = 0
@@ -33,3 +34,8 @@ class Player(object):
     def add_rushing_yards(self, rushing_yards):
         self.rushing_yards = self.rushing_yards + rushing_yards
 
+    def add_reception_yards(self, reception_yards):
+        self.reception_yards = self.reception_yards + reception_yards
+
+    def add_passes(self):
+        self.passes += 1
