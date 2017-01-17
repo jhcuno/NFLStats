@@ -23,3 +23,4 @@ class Player(object):
 
     def add_rushing_yards(self, rushing_yards):
         self.rushing_yards = self.rushing_yards + rushing_yards
+

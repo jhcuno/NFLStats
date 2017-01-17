@@ -57,7 +57,7 @@ team_abbreviations = {'Arizona Cardinals': 'ARI',
                       'Tampa Bay Buccaneers': 'TBB',
                       'Tennessee Titans': 'TEN',
                       'Washington Redskins': 'WAS'}
-test_file = open("TestTemp.txt", 'r')
+test_file = open("TestTemp1Q.txt", 'r')
 
 string_to_enterTemp = runningPlay
 
@@ -86,16 +86,32 @@ def name_search(string_to_enter):
     matches = names.findall(string_to_enter)
     number_dash_name_parse(matches[0])
     print("name match: %s" % matches)
+    return matches
 
 
 def passing_play_parse(string_to_enter):
     if interception.search(string_to_enter):
         print("interception")
+        names_to_parse = name_search(string_to_enter)
+        for i in range(4):
+            number_dash_name_parse(names_to_parse[i])
+
     elif incomplete.search(string_to_enter):
         print("incomplete")
+        names_to_parse = name_search(string_to_enter)
+        for i in range(2):
+            number_dash_name_parse(names_to_parse[i])
     else:
         matches = yards.findall(string_to_enter)
+        matches.append('9')
         print("passing yds %s" % matches)
+        names_to_parse = name_search(string_to_enter)
+        temp_list = []
+        for i in range(2):
+            temp_list.append(number_dash_name_parse(names_to_parse[i]))
+        print(temp_list)
+        print(type(int(matches[0])))
+        player_objects.get(temp_list[0]).add_passing_yards(int(matches[0]))
 
 
 def running_play_parse(string_to_enter):
@@ -107,29 +123,36 @@ def running_play_parse(string_to_enter):
     else:
         matches = yards.findall(string_to_enter)
         print("rushing yds %s" % matches)
+        names_to_parse = name_search(string_to_enter)
+        for i in range(1):
+            number_dash_name_parse(names_to_parse[i])
 
 
+# going to have to work on getting the team name(offensive_team_name) for each player correct.
 def number_dash_name_parse(string_to_parse):
     number = player_number.findall(string_to_parse)
     name = player_name.findall(string_to_parse)
     key_name = name[0].split(".")[1] + number[0]
     if key_name not in player_objects:
-        temp = {key_name: Player(name, number, t_name)}
+        temp = {key_name: Player(name, number, offensive_team_name)}
         player_objects.update(temp)
-
+    return key_name
 
 line = test_file.readline()
-t_name = "null"
+offensive_team_name = "null"
 player_objects = {}
 
 while line:
     if team_name.search(line):
-        t_name = team_name.findall(line)[0]
+        offensive_team_name = team_name.findall(line)[0]
     play_by_play_parser(line)
     line = test_file.readline()
 
 for key in player_objects.keys():
     print(key)
+
+print(len(player_objects))
+print(player_objects.get('Cook8').passing_yards)
 
 test_file.close()
 
