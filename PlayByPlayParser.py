@@ -23,6 +23,7 @@ incomplete = re.compile("incomplete")
 player_number = re.compile("^(\d+)")
 player_name = re.compile("[A-z]+\.[A-z]+")
 team_name = re.compile("[A-Z][a-z]+\s[A-z]+(?=\sat)")
+penalty = re.compile('PENALTY')
 
 team_abbreviations = {'Arizona Cardinals': 'ARI',
                       'Atlanta Falcons': 'ATL',
@@ -57,7 +58,7 @@ team_abbreviations = {'Arizona Cardinals': 'ARI',
                       'Tampa Bay Buccaneers': 'TBB',
                       'Tennessee Titans': 'TEN',
                       'Washington Redskins': 'WAS'}
-test_file = open("TestTemp1Q.txt", 'r')
+test_file = open("TestTemp.txt", 'r')
 
 string_to_enterTemp = runningPlay
 
@@ -90,27 +91,25 @@ def name_search(string_to_enter):
 
 
 def passing_play_parse(string_to_enter):
-    if interception.search(string_to_enter):
+    if interception.search(string_to_enter) and not penalty.search(string_to_enter):
         print("interception")
         names_to_parse = name_search(string_to_enter)
         for i in range(4):
             number_dash_name_parse(names_to_parse[i])
 
-    elif incomplete.search(string_to_enter):
+    elif incomplete.search(string_to_enter) and not penalty.search(string_to_enter):
         print("incomplete")
         names_to_parse = name_search(string_to_enter)
         for i in range(2):
             number_dash_name_parse(names_to_parse[i])
-    else:
+    elif not penalty.search(string_to_enter):
         matches = yards.findall(string_to_enter)
-        matches.append('9')
+        matches.append('0')
         print("passing yds %s" % matches)
         names_to_parse = name_search(string_to_enter)
         temp_list = []
         for i in range(2):
             temp_list.append(number_dash_name_parse(names_to_parse[i]))
-        print(temp_list)
-        print(type(int(matches[0])))
         player_objects.get(temp_list[0]).add_passing_yards(int(matches[0]))
 
 
@@ -122,10 +121,16 @@ def running_play_parse(string_to_enter):
             print("fumble not lost")
     else:
         matches = yards.findall(string_to_enter)
+        matches.append('0')
         print("rushing yds %s" % matches)
         names_to_parse = name_search(string_to_enter)
+        temp_list = []
         for i in range(1):
-            number_dash_name_parse(names_to_parse[i])
+            temp_list.append(number_dash_name_parse(names_to_parse[i]))
+        print('RUSHING YARDS: ')
+        print(int(matches[0]))
+        print(temp_list)
+        player_objects.get(temp_list[0]).add_rushing_yards(int(matches[0]))
 
 
 # going to have to work on getting the team name(offensive_team_name) for each player correct.
@@ -152,7 +157,7 @@ for key in player_objects.keys():
     print(key)
 
 print(len(player_objects))
-print(player_objects.get('Cook8').passing_yards)
+print(player_objects.get('Murray28').rushing_yards)
 
 test_file.close()
 

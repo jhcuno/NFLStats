@@ -16,6 +16,15 @@ class Player(object):
         self.team = team
         self.passing_yards = 0
         self.rushing_yards = 0
+        self.rush_attempts = 0
+        self.targets = 0
+        self.receptions = 0
+        self.passes = 0
+        self.incompletions = 0
+        self.completions = 0
+        self.interceptions = 0
+        self.fumbles = 0
+        self.fumbles_lost = 0
         Player.player_count += 1
 
     def add_passing_yards(self, passing_yards):
