@@ -92,11 +92,13 @@ def name_search(string_to_enter):
 
 def passing_play_parse(string_to_enter):
     names_to_parse = name_search(string_to_enter)
+    temp_list = []
+    for i in range(len(names_to_parse)):
+        temp_list.append(names_to_parse[i])
     if interception.search(string_to_enter) and not penalty.search(string_to_enter):
         print("interception")
         for i in range(4):
             number_dash_name_parse(names_to_parse[i])
-
     elif incomplete.search(string_to_enter) and not penalty.search(string_to_enter):
         print("incomplete")
         for i in range(2):
