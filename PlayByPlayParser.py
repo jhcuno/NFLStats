@@ -58,9 +58,11 @@ team_abbreviations = {'Arizona Cardinals': 'ARI',
                       'Tampa Bay Buccaneers': 'TBB',
                       'Tennessee Titans': 'TEN',
                       'Washington Redskins': 'WAS'}
-test_file = open("TestTemp.txt", 'r')
+
 
 string_to_enterTemp = runningPlay
+player_objects = {}
+offensive_team_name = "null"
 
 
 def play_by_play_parser(string_to_enter):
@@ -144,21 +146,26 @@ def number_dash_name_parse(string_to_parse):
         player_objects.update(temp)
     return key_name
 
-line = test_file.readline()
-offensive_team_name = "null"
-player_objects = {}
 
-while line:
-    if team_name.search(line):
-        offensive_team_name = team_name.findall(line)[0]
-    play_by_play_parser(line)
+def run_game_log():
+    """Runs an entire game log, eventually it should take a :param of filename
+    """
+    test_file = open("TestTemp.txt", 'r')
     line = test_file.readline()
 
-for key in player_objects.keys():
-    print(key)
+    while line:
+        if team_name.search(line):
+            offensive_team_name = team_name.findall(line)[0]
+        play_by_play_parser(line)
+        line = test_file.readline()
 
-print(len(player_objects))
-print(player_objects.get('Murray28').reception_yards)
+    for key in player_objects.keys():
+        print(key)
 
-test_file.close()
+    print(len(player_objects))
+    print(player_objects.get('Murray28').reception_yards)
 
+    test_file.close()
+
+
+run_game_log()
