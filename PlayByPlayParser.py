@@ -145,7 +145,7 @@ def number_dash_name_parse(string_to_parse, off_team_name):
 
 
 def run_game_log():
-    """Runs an entire game log, eventually it should take a :param of filename
+    """Runs an entire game log, eventually it should take a :param of filename but usingt test_file for now
     """
     test_file = open("TestTemp.txt", 'r')
     line = test_file.readline()
