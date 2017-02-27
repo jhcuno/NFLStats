@@ -90,6 +90,12 @@ def name_search(string_to_enter, off_team_name):
 
 
 def passing_play_parse(string_to_enter, off_team_name):
+    """
+    Parses a running play.
+    :param string_to_enter: String that consists of a single [passing] play from the game log.
+    :param off_team_name: String that consists of the team currently on offense for the play.
+    :return:
+    """
     names_to_parse = name_search(string_to_enter, off_team_name)
     temp_list = []
     for i in range(len(names_to_parse)):
@@ -114,6 +120,12 @@ def passing_play_parse(string_to_enter, off_team_name):
 
 
 def running_play_parse(string_to_enter, off_team_name):
+    """
+    Parses a running play.
+    :param string_to_enter: String that consists of a single [running] play from the game log.
+    :param off_team_name: String that consists of the team currently on offense for the play.
+    :return:
+    """
     if fumble_regex.search(string_to_enter):
         if fumble_lost_regex.search(string_to_enter):
             print("fumble lost")
