@@ -172,9 +172,14 @@ def run_game_log():
         print(key)
 
     print(len(player_objects))
-    print(player_objects.get('Murray28').reception_yards)
+    print(player_objects.get('Miller26').rushing_yards)
 
     test_file.close()
 
+def get_rushing_yards(player_name):
+    return player_objects.get(player_name).rushing_yards
 
-run_game_log()
+def get_receiving_yards(player_name):
+    return player_objects.get(player_name).receiving_yards
+
+# run_game_log()
