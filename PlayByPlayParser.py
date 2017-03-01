@@ -177,10 +177,5 @@ def run_game_log():
     test_file.close()
     return player_objects
 
-def get_rushing_yards(player_name):
-    return player_objects.get(player_name).rushing_yards
-
-def get_receiving_yards(player_name):
-    return player_objects.get(player_name).receiving_yards
 
 # run_game_log()

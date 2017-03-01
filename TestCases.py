@@ -1,7 +1,5 @@
 import unittest
 from PlayByPlayParser import run_game_log
-from PlayByPlayParser import get_rushing_yards
-from PlayByPlayParser import get_receiving_yards
 
 
 player_stats = run_game_log()
@@ -32,7 +30,6 @@ class KnownReceivingYards(unittest.TestCase):
         for name, yards in self.known_receiving_yards:
             result = player_stats.get(name).receiving_yards
             self.assertEqual(yards, result)
-
 
 
 if __name__ == '__main__':
