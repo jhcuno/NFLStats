@@ -4,8 +4,8 @@ from Player import Player
 
 names_regex = re.compile("\d+-[A-z]+\.[A-z]+")        # compiled regex for the first name that appears in the string
 passing_regex = re.compile("pass")                    # compiled regex for passing plays NEED TO ADD SOMETHING FOR INCOMPLETE PASSES
-run_regex = re.compile("guard | tackle | middle | scrambles")     # compiled regex for running plays
-yards_regex = re.compile("for\s(\d+)")                # compiled regex for yardage
+run_regex = re.compile("guard | tackle | middle | scrambles | right end | left end")     # compiled regex for running plays
+yards_regex = re.compile("for\s(-*\d+)")                # compiled regex for yardage
 interception_regex = re.compile("INTERCEPTED")
 fumble_regex = re.compile("FUMBLE")
 fumble_lost_regex = re.compile("RECOVERED")            # check to see if fumble is necessary not sure recovered would be used elsewhare
@@ -72,10 +72,13 @@ def play_by_play_parser(string_to_enter, off_team_name):
         name_search(string_to_enter, off_team_name)
 
     if passing_regex.search(string_to_enter):
-        passing_play_parse(string_to_enter, off_team_name)
+        if penalty_regex.search(string_to_enter):
+            print('PENALTY')
+        else:
+            passing_play_parse(string_to_enter, off_team_name)
 
     if run_regex.search(string_to_enter) and not passing_regex.search(string_to_enter):
-        # need to work on fumbles but need to work out fumbles recovered vs lost
+        # need to work on fumbles, but need to work out fumbles recovered vs lost
         running_play_parse(string_to_enter, off_team_name)
 
     if sack_regex.search(string_to_enter):
@@ -116,7 +119,9 @@ def passing_play_parse(string_to_enter, off_team_name):
         for i in range(2):
             temp_list.append(number_dash_name_parse(names_to_parse[i], off_team_name))
         player_objects.get(temp_list[0]).add_passing_yards(int(matches[0]))
+        player_objects.get(temp_list[0]).add_passes()
         player_objects.get(temp_list[1]).add_reception_yards(int(matches[0]))
+        player_objects.get(temp_list[1]).add_reception()
 
 
 def running_play_parse(string_to_enter, off_team_name):
@@ -140,7 +145,7 @@ def running_play_parse(string_to_enter, off_team_name):
         for i in range(1):
             temp_list.append(number_dash_name_parse(names_to_parse[i], off_team_name))
         print('RUSHING YARDS: ')
-        print(int(matches[0]))
+        print((matches[0]))
         print(temp_list)
         player_objects.get(temp_list[0]).add_rushing_yards(int(matches[0]))
 
@@ -156,7 +161,7 @@ def number_dash_name_parse(string_to_parse, off_team_name):
     return key_name
 
 
-def run_game_log():
+def run_entire_game_log():
     """Runs an entire game log, eventually it should take a :param of filename but usingt test_file for now
     """
     test_file = open("TestTemp.txt", 'r')
@@ -172,10 +177,12 @@ def run_game_log():
         print(key)
 
     print(len(player_objects))
-    print(player_objects.get('Miller26').rushing_yards)
+    print(player_objects.get('Murray28').rushing_yards)
+    print(player_objects.get('Fuller15').receptions)
+    print(player_objects.get('Fuller15').receiving_yards)
 
     test_file.close()
     return player_objects
 
 
-# run_game_log()
+# run_entire_game_log()

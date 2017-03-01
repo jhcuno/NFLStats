@@ -39,3 +39,6 @@ class Player(object):
 
     def add_passes(self):
         self.passes += 1
+
+    def add_reception(self):
+        self.receptions +=1
