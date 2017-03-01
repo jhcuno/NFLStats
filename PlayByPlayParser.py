@@ -175,6 +175,7 @@ def run_game_log():
     print(player_objects.get('Miller26').rushing_yards)
 
     test_file.close()
+    return player_objects
 
 def get_rushing_yards(player_name):
     return player_objects.get(player_name).rushing_yards
