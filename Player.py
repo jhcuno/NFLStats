@@ -26,6 +26,7 @@ class Player(object):
         self.interceptions = 0
         self.fumbles = 0
         self.fumbles_lost = 0
+        self.rushing_attempts = 0
         Player.player_count += 1
 
     def add_passing_yards(self, passing_yards):
@@ -37,12 +38,24 @@ class Player(object):
     def add_reception_yards(self, reception_yards):
         self.receiving_yards = self.receiving_yards + reception_yards
 
+    def add_receiving_target(self):
+        self.targets += 1
+
     def add_passing_attempt(self):
         self.passing_attempts += 1
-        print("########### PASS ATTEMPT #############")
 
     def add_reception(self):
         self.receptions += 1
 
     def add_interception(self):
         self.interceptions += 1
+
+    def add_completion(self):
+        self.completions += 1
+
+    def add_fumble(self):
+        self.fumbles += 1
+
+    def add_fumble_lost(self):
+        self.fumbles_lost += 1
+        self.fumbles += 1

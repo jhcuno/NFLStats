@@ -5,9 +5,10 @@ from Player import Player
 names_regex = re.compile("\d+-[A-z]+\.[A-z]+")        # compiled regex for the first name that appears in the string
 passing_regex = re.compile("pass")                    # compiled regex for passing plays NEED TO ADD SOMETHING FOR INCOMPLETE PASSES
 run_regex = re.compile("guard | tackle | middle | scrambles | right end | left end")     # compiled regex for running plays
+snap_fumble_regex = re.compile("\d+-[A-z]+\.[A-z]+\sFUMBLES")
 yards_regex = re.compile("for\s(-*\d+)")                # compiled regex for yardage
 interception_regex = re.compile("INTERCEPTED")
-fumble_regex = re.compile("FUMBLE")
+fumble_regex = re.compile("FUMBLES")
 fumble_lost_regex = re.compile("RECOVERED")            # check to see if fumble is necessary not sure recovered would be used elsewhare
 fumble_not_lost_regex = re.compile('recovered')
 penalty_regex = re.compile("PENALTY")                 # enforced penalties
@@ -84,6 +85,15 @@ def play_by_play_parser(string_to_enter, off_team_name):
 
     if sack_regex.search(string_to_enter):
         print("sack")
+    if snap_fumble_regex.search(string_to_enter):
+        print("snap fumble")
+        names_to_parse = name_search(string_to_enter, off_team_name)
+        temp_list = []
+        for i in range(1):
+            temp_list.append(number_dash_name_parse(names_to_parse[i], off_team_name))
+        player_objects.get(temp_list[0]).add_fumble()
+        # print(temp_list[0])
+        # print("^^^^^^^^")
 
 
 def name_search(string_to_enter, off_team_name):
@@ -118,6 +128,7 @@ def passing_play_parse(string_to_enter, off_team_name):
         for i in range(2):
             temp_list.append(number_dash_name_parse(names_to_parse[i], off_team_name))
         player_objects.get(temp_list[0]).add_passing_attempt()
+        player_objects.get(temp_list[1]).add_receiving_target()
     elif not penalty_regex.search(string_to_enter):
         matches = yards_regex.findall(string_to_enter)
         matches.append('0')
@@ -127,8 +138,10 @@ def passing_play_parse(string_to_enter, off_team_name):
             temp_list.append(number_dash_name_parse(names_to_parse[i], off_team_name))
         player_objects.get(temp_list[0]).add_passing_yards(int(matches[0]))
         player_objects.get(temp_list[0]).add_passing_attempt()
+        player_objects.get(temp_list[0]).add_completion()
         player_objects.get(temp_list[1]).add_reception_yards(int(matches[0]))
         player_objects.get(temp_list[1]).add_reception()
+        player_objects.get(temp_list[1]).add_receiving_target()
 
 
 def running_play_parse(string_to_enter, off_team_name):
@@ -139,10 +152,16 @@ def running_play_parse(string_to_enter, off_team_name):
     :return:
     """
     if fumble_regex.search(string_to_enter):
+        temp_list = []
+        names_to_parse = name_search(string_to_enter, off_team_name)
+        for i in range(1):
+            temp_list.append(number_dash_name_parse(names_to_parse[i], off_team_name))
         if fumble_lost_regex.search(string_to_enter):
             print("fumble lost")
+            player_objects.get(temp_list[0]).add_fumble_lost()
         else:
             print("fumble not lost")
+            player_objects.get(temp_list[0]).add_fumble()
     else:
         matches = yards_regex.findall(string_to_enter)
         matches.append('0')
