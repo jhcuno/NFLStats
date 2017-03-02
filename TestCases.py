@@ -4,14 +4,17 @@ from PlayByPlayParser import run_entire_game_log
 player_stats = run_entire_game_log()
 
 
-class KnownRushingYards(unittest.TestCase):
+class KnownRushingStats(unittest.TestCase):
     known_rushing_yard_values = (('Miller26', 73),
                                  ('Murray28', 39),
                                  ('Grimes41', 30),
-                                 ('Washington33', 16)
-                                 )
+                                 ('Washington33', 16))
     known_fumbles = (('Osweiler17', 1),
                      ('Miller26', 0))
+    known_rushing_attempts = (('Miller26', 31),
+                                 ('Murray28', 12),
+                                 ('Grimes41', 4),
+                                 ('Washington33', 4))
 
     def test_compare_rushing_yards_to_known(self):
         """get_rushing_yards should give known result with a known input"""
@@ -25,24 +28,28 @@ class KnownRushingYards(unittest.TestCase):
             result = player_stats.get(name).fumbles
             self.assertEqual(fumbles, result)
 
-class KnownReceivingYards(unittest.TestCase):
+    def test_compare_attempts_to_known(self):
+        """compares number of attempts with a known input"""
+        for name, attempts in self.known_rushing_attempts:
+            result = player_stats.get(name).rushing_attempts
+            self.assertEqual(attempts, result)
+
+
+class KnownReceivingStats(unittest.TestCase):
     known_receiving_yards = (('Holmes18', 50),
                              ('Hopkins10', 67),
                              ('Fuller15', 37),
                              ('Crabtree15', 33))
+    known_number_of_receptions = (('Holmes18', 4),
+                                  ('Hopkins10', 5),
+                                  ('Fuller15', 4),
+                                  ('Crabtree15', 2))
 
     def test_compare_receiving_yards_to_known(self):
         """get_receiving yards should give known result with a known input"""
         for name, yards in self.known_receiving_yards:
             result = player_stats.get(name).receiving_yards
             self.assertEqual(yards, result)
-
-
-class KnownReceivingStats(unittest.TestCase):
-    known_number_of_receptions = (('Holmes18', 4),
-                                  ('Hopkins10', 5),
-                                  ('Fuller15', 4),
-                                  ('Crabtree15', 2))
 
     def test_compare_number_of_receptions(self):
         """compares a known number of receptions with a known input"""

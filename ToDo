@@ -1,6 +1,7 @@
 - penalties vs no penalties
 - passing does not account for plays with penalties yet
 - account for yardage on fumbles
-- no fumbles considered after a fumble yet
+- yardage involved with fumbles not considered
+- I don't think an rushing attempt is counted during fumbles, not sure if statisticaly they are
 - for rushes when a run goes for zero yards it is reported as 'no gain'.  Need to change it to '0'
 - ...

@@ -59,3 +59,6 @@ class Player(object):
     def add_fumble_lost(self):
         self.fumbles_lost += 1
         self.fumbles += 1
+
+    def add_rushing_attempt(self):
+        self.rushing_attempts += 1

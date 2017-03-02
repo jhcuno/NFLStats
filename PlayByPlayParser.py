@@ -174,6 +174,7 @@ def running_play_parse(string_to_enter, off_team_name):
         print((matches[0]))
         print(temp_list)
         player_objects.get(temp_list[0]).add_rushing_yards(int(matches[0]))
+        player_objects.get(temp_list[0]).add_rushing_attempt()
 
 
 # going to have to work on getting the team name(offensive_team_name) for each player correct.
