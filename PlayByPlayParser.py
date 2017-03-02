@@ -72,10 +72,11 @@ def play_by_play_parser(string_to_enter, off_team_name):
         name_search(string_to_enter, off_team_name)
 
     if passing_regex.search(string_to_enter):
-        if penalty_regex.search(string_to_enter):
-            print('PENALTY')
-        else:
-            passing_play_parse(string_to_enter, off_team_name)
+        # if penalty_regex.search(string_to_enter):
+        #     print('PENALTY')
+        # else:
+        #     passing_play_parse(string_to_enter, off_team_name)
+        passing_play_parse(string_to_enter, off_team_name)
 
     if run_regex.search(string_to_enter) and not passing_regex.search(string_to_enter):
         # need to work on fumbles, but need to work out fumbles recovered vs lost
@@ -103,8 +104,9 @@ def passing_play_parse(string_to_enter, off_team_name):
     temp_list = []
     for i in range(len(names_to_parse)):
         temp_list.append(names_to_parse[i])
-    if interception_regex.search(string_to_enter) and not penalty_regex.search(string_to_enter):
-        print("interception")
+    # if interception_regex.search(string_to_enter) and not penalty_regex.search(string_to_enter):
+    if interception_regex.search(string_to_enter):
+        print("interception!!!!!!!")
         temp_list = []
         for i in range(4):
             temp_list.append(number_dash_name_parse(names_to_parse[i], off_team_name))

@@ -3,5 +3,4 @@
 - account for yardage on fumbles
 - no fumbles considered after a fumble yet
 - for rushes when a run goes for zero yards it is reported as 'no gain'.  Need to change it to '0'
-- One of c.cook's interceptions is not regerstering due to penalty AFTER the interception
 - ...
