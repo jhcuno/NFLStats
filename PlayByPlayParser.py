@@ -105,12 +105,17 @@ def passing_play_parse(string_to_enter, off_team_name):
         temp_list.append(names_to_parse[i])
     if interception_regex.search(string_to_enter) and not penalty_regex.search(string_to_enter):
         print("interception")
+        temp_list = []
         for i in range(4):
-            number_dash_name_parse(names_to_parse[i], off_team_name)
+            temp_list.append(number_dash_name_parse(names_to_parse[i], off_team_name))
+        player_objects.get(temp_list[0]).add_passing_attempt()
+        player_objects.get(temp_list[0]).add_interception()
     elif incomplete_regex.search(string_to_enter) and not penalty_regex.search(string_to_enter):
         print("incomplete")
+        temp_list = []
         for i in range(2):
-            number_dash_name_parse(names_to_parse[i], off_team_name)
+            temp_list.append(number_dash_name_parse(names_to_parse[i], off_team_name))
+        player_objects.get(temp_list[0]).add_passing_attempt()
     elif not penalty_regex.search(string_to_enter):
         matches = yards_regex.findall(string_to_enter)
         matches.append('0')
@@ -119,7 +124,7 @@ def passing_play_parse(string_to_enter, off_team_name):
         for i in range(2):
             temp_list.append(number_dash_name_parse(names_to_parse[i], off_team_name))
         player_objects.get(temp_list[0]).add_passing_yards(int(matches[0]))
-        player_objects.get(temp_list[0]).add_passes()
+        player_objects.get(temp_list[0]).add_passing_attempt()
         player_objects.get(temp_list[1]).add_reception_yards(int(matches[0]))
         player_objects.get(temp_list[1]).add_reception()
 

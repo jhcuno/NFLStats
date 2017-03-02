@@ -44,5 +44,32 @@ class KnownNumberOfReceptions(unittest.TestCase):
             self.assertEqual(receptions, result)
 
 
+class KnownPassingStats(unittest.TestCase):
+    known_passing_yards = (('Osweiler17', 168),
+                           ('Cook8', 161))
+    known_passing_attempts = (('Osweiler17', 25),
+                              ('Cook8', 45))
+    known_interceptions_thrown = (('Osweiler17', 0),
+                                  ('Cook8', 3))
+
+    def test_compare_number_of_passing_yards(self):
+        """"compares a known number for passing yards with a known input"""
+        for name, passing_yards in self.known_passing_yards:
+            result = player_stats.get(name).passing_yards
+            self.assertEqual(passing_yards, result)
+
+    def test_compare_number_of_passing_attempts(self):
+        """compares a known number of passing attempts given a known input"""
+        for name, passing_attempts in self.known_passing_attempts:
+            result = player_stats.get(name).passing_attempts
+            self.assertEqual(passing_attempts, result)
+
+    def test_compare_interception_numbers(self):
+        """compares knwown number of interceptions given a known inout"""
+        for name, interceptions in self.known_interceptions_thrown:
+            result = player_stats.get(name).interceptions
+            self.assertEqual(interceptions, result)
+
+
 if __name__ == '__main__':
     unittest.main()

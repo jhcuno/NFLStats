@@ -20,7 +20,7 @@ class Player(object):
         self.rush_attempts = 0
         self.targets = 0
         self.receptions = 0
-        self.passes = 0
+        self.passing_attempts = 0
         self.incompletions = 0
         self.completions = 0
         self.interceptions = 0
@@ -37,8 +37,12 @@ class Player(object):
     def add_reception_yards(self, reception_yards):
         self.receiving_yards = self.receiving_yards + reception_yards
 
-    def add_passes(self):
-        self.passes += 1
+    def add_passing_attempt(self):
+        self.passing_attempts += 1
+        print("########### PASS ATTEMPT #############")
 
     def add_reception(self):
-        self.receptions +=1
+        self.receptions += 1
+
+    def add_interception(self):
+        self.interceptions += 1
