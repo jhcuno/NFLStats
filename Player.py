@@ -27,6 +27,9 @@ class Player(object):
         self.fumbles = 0
         self.fumbles_lost = 0
         self.rushing_attempts = 0
+        self.touchdowns_receiving = 0
+        self.touchdowns_passing = 0
+        self.touchdowns_rushing = 0
         Player.player_count += 1
 
     def add_passing_yards(self, passing_yards):
@@ -62,3 +65,12 @@ class Player(object):
 
     def add_rushing_attempt(self):
         self.rushing_attempts += 1
+
+    def add_passing_touchdown(self):
+        self.touchdowns_passing += 1
+
+    def add_receiving_touchdown(self):
+        self.touchdowns_receiving += 1
+
+    def add_rushing_touchdown(self):
+        self.touchdowns_rushing += 1

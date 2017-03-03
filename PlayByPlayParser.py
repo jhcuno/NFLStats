@@ -21,6 +21,7 @@ incomplete_regex = re.compile("incomplete")
 player_number_regex = re.compile("^(\d+)")
 player_name_regex = re.compile("[A-z]+\.[A-z]+")
 team_name_regex = re.compile("[A-Z][a-z]+\s[A-z]+(?=\sat)")
+touchdown_regex = re.compile("TOUCHDOWN")
 
 
 team_abbreviations = {'Arizona Cardinals': 'ARI',
@@ -142,6 +143,9 @@ def passing_play_parse(string_to_enter, off_team_name):
         player_objects.get(temp_list[1]).add_reception_yards(int(matches[0]))
         player_objects.get(temp_list[1]).add_reception()
         player_objects.get(temp_list[1]).add_receiving_target()
+        if touchdown_regex.search(string_to_enter):
+            player_objects.get(temp_list[0]).add_passing_touchdown()
+            player_objects.get(temp_list[1]).add_receiving_touchdown()
 
 
 def running_play_parse(string_to_enter, off_team_name):
@@ -175,9 +179,10 @@ def running_play_parse(string_to_enter, off_team_name):
         print(temp_list)
         player_objects.get(temp_list[0]).add_rushing_yards(int(matches[0]))
         player_objects.get(temp_list[0]).add_rushing_attempt()
+        if touchdown_regex.search(string_to_enter):
+            player_objects.get(temp_list[0]).add_rushing_touchdown()
 
 
-# going to have to work on getting the team name(offensive_team_name) for each player correct.
 def number_dash_name_parse(string_to_parse, off_team_name):
     number = player_number_regex.findall(string_to_parse)
     name = player_name_regex.findall(string_to_parse)

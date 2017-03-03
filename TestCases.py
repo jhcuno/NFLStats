@@ -12,9 +12,14 @@ class KnownRushingStats(unittest.TestCase):
     known_fumbles = (('Osweiler17', 1),
                      ('Miller26', 0))
     known_rushing_attempts = (('Miller26', 31),
-                                 ('Murray28', 12),
-                                 ('Grimes41', 4),
-                                 ('Washington33', 4))
+                              ('Murray28', 12),
+                              ('Grimes41', 4),
+                              ('Washington33', 4))
+    known_rushing_touchdowns = (('Miller26', 1),
+                                ('Murray28', 1),
+                                ('Grimes41', 0),
+                                ('Washington33', 0),
+                                ('Osweiler17', 1))
 
     def test_compare_rushing_yards_to_known(self):
         """get_rushing_yards should give known result with a known input"""
@@ -34,6 +39,12 @@ class KnownRushingStats(unittest.TestCase):
             result = player_stats.get(name).rushing_attempts
             self.assertEqual(attempts, result)
 
+    def test_compare_rushing_touchdowns_to_known(self):
+        """compares number of rushing touchdowns with a known input"""
+        for name, rushing_touchdowns in self.known_rushing_touchdowns:
+            result = player_stats.get(name).touchdowns_rushing
+            self.assertEqual(rushing_touchdowns, result)
+
 
 class KnownReceivingStats(unittest.TestCase):
     known_receiving_yards = (('Holmes18', 50),
@@ -44,6 +55,10 @@ class KnownReceivingStats(unittest.TestCase):
                                   ('Hopkins10', 5),
                                   ('Fuller15', 4),
                                   ('Crabtree15', 2))
+    known_receiving_touchdowns = (('Holmes18', 1),
+                                  ('Hopkins10', 1),
+                                  ('Fuller15', 0),
+                                  ('Crabtree15', 0))
 
     def test_compare_receiving_yards_to_known(self):
         """get_receiving yards should give known result with a known input"""
@@ -57,6 +72,12 @@ class KnownReceivingStats(unittest.TestCase):
             result = player_stats.get(name).receptions
             self.assertEqual(receptions, result)
 
+    def test_compare_number_of_receiving_touchdowns(self):
+        """compares a known number of receiving touchdowns with a known input"""
+        for name, receiving_touchdowns in self.known_receiving_touchdowns:
+            result = player_stats.get(name).touchdowns_receiving
+            self.assertEqual(receiving_touchdowns, result)
+
 
 class KnownPassingStats(unittest.TestCase):
     known_passing_yards = (('Osweiler17', 168),
@@ -68,6 +89,8 @@ class KnownPassingStats(unittest.TestCase):
 
     known_completions = (('Osweiler17', 14),
                          ('Cook8', 18))
+    known_passing_touchdowns = (('Osweiler17', 1),
+                                ('Cook8', 1))
 
     def test_compare_number_of_passing_yards(self):
         """"compares a known number for passing yards with a known input"""
@@ -92,6 +115,12 @@ class KnownPassingStats(unittest.TestCase):
         for name, completions in self.known_completions:
             result = player_stats.get(name).completions
             self.assertEqual(completions, result)
+
+    def test_compare_passing_touchdowns(self):
+        """compares known number of passing touchdowns given a known input"""
+        for name, passing_touchdowns in self.known_passing_touchdowns:
+            result = player_stats.get(name).touchdowns_passing
+            self.assertEqual(passing_touchdowns, result)
 
 
 if __name__ == '__main__':
