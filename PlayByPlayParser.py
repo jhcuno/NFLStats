@@ -184,6 +184,9 @@ def running_play_parse(string_to_enter, off_team_name):
 
 
 def number_dash_name_parse(string_to_parse, off_team_name):
+    """Reformat a player's #-<First Initial>.<Last Name> to <Last Name><Player#>. Checks to see if that player
+    has a Player object already created.  If not it creates one and adds it to the player_objects dictionary.
+     Key in the dictionary is <Last Name><Player#>."""
     number = player_number_regex.findall(string_to_parse)
     name = player_name_regex.findall(string_to_parse)
     key_name = name[0].split(".")[1] + number[0]
@@ -194,7 +197,7 @@ def number_dash_name_parse(string_to_parse, off_team_name):
 
 
 def run_entire_game_log():
-    """Runs an entire game log, eventually it should take a :param of filename but usingt test_file for now
+    """Runs an entire game log, eventually it should take a :param of filename but using test_file for now
     """
     test_file = open("TestTemp.txt", 'r')
     line = test_file.readline()

@@ -1,4 +1,3 @@
-- add touchdowns
 - account for yardage on fumbles
 - for rushes when a run goes for zero yards it is reported as 'no gain'.  Need to change it to '0'
 - look into TOUCHDOWN NULLIFIED as an edge case
