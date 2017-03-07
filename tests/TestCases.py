@@ -1,5 +1,6 @@
 import unittest
-from PlayByPlayParser import run_entire_game_log
+
+from sample.PlayByPlayParser import run_entire_game_log
 
 player_stats = run_entire_game_log()
 
