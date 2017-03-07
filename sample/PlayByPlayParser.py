@@ -1,6 +1,6 @@
 import re
-from Player import Player
 
+from sample.Player import Player
 
 names_regex = re.compile("\d+-[A-z]+\.[A-z]+")        # compiled regex for the first name that appears in the string
 passing_regex = re.compile("pass")                    # compiled regex for passing plays NEED TO ADD SOMETHING FOR INCOMPLETE PASSES
