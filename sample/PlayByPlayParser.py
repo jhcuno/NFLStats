@@ -222,6 +222,8 @@ def run_entire_game_log():
     print(player_objects.get('Murray28').rushing_yards)
     print(player_objects.get('Fuller15').receptions)
     print(player_objects.get('Fuller15').receiving_yards)
+    print((str(player_objects.get('Miller26').touchdowns_receiving) + "!!!!!!"))
+    print(player_objects.get('Miller26').to_json())
 
     test_file.close()
     return player_objects
