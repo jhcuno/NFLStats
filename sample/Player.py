@@ -32,6 +32,28 @@ class Player(object):
         self.touchdowns_rushing = 0
         Player.player_count += 1
 
+    def to_json(self):
+        """
+        Converts player object to a JSON string.
+        :return:
+        """
+        json_string = (" { name : " + self.name +
+                       " number : " + str(self.number) +
+                       " team : " + self.team +
+                       " passing_yards : " + str(self.passing_yards) +
+                       " rushing_yards : " + str(self.rushing_yards) +
+                       " targets : " + str(self.targets) +
+                       " receptions : " + str(self.receptions) +
+                       " passing_attempts : " + str(self.passing_attempts) +
+                       " incompletions : " + str(self.incompletions) +
+                       " fumbles : " + str(self.fumbles) +
+                       " fumbles_lost : " + str(self.fumbles_lost) +
+                       " rushing_attempts : " + str(self.rushing_attempts) +
+                       " touchdowns_receiving : " + str(self.touchdowns_receiving) +
+                       " touchdowns_passing : " + str(self.touchdowns_passing) +
+                       " touchdowns_rushing : " + str(self.touchdowns_rushing))
+        return json_string
+
     def add_passing_yards(self, passing_yards):
         self.passing_yards = self.passing_yards + passing_yards
 
